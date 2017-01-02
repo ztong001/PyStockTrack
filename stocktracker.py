@@ -12,10 +12,27 @@ from matplotlib.finance import candlestick_ohlc
 start = datetime.date(2016, 1, 1)
 end = datetime.date(2017, 1, 1)
 
-# Get Google stock data by its ticker symbol "GOOGL"
-gg = web.DataReader("GOOGL", 'yahoo', start, end)
+# Getstock data by its ticker symbol "GOOG"
+google = web.DataReader("GOOG", "yahoo", start, end)
+twitter = web.DataReader("TWTR", "yahoo", start, end)
+paypal = web.DataReader("PYPL", "yahoo", start, end)
 
-print(type(gg))
+# google.plot(grid=True)
+
+# Create a DataFrame consisting of the adjusted closing price of
+# these stocks, first by making a list of these objects and using the join
+# method
+stocks = pd.DataFrame({"TWTR": twitter["Adj Close"],
+                       "PYPL": paypal["Adj Close"],
+                       "GOOG": google["Adj Close"]})
+
+stocks.head()
+
+# df.apply(arg) will apply the function arg to each column in df, and return a DataFrame with the result
+# stock return is price at current time over price at the beginning
+stock_return = stocks.apply(lambda x: x / x[0])
+#stock_return.plot(grid= True).axhline(y=1, color ="black", lw=2)
+# plt.show()
 
 
 def pandas_candlestick_ohlc(dat, stick="day", otherseries=None):
@@ -96,9 +113,10 @@ def pandas_candlestick_ohlc(dat, stick="day", otherseries=None):
     ax.grid(True)
 
     # Create the candlestick chart
-    candle_list= list(zip(list(date2num(plotdat.index.tolist())), plotdat["Open"].tolist(), plotdat["High"].tolist(),
-                                  plotdat["Low"].tolist(), plotdat["Close"].tolist()))
-    candlestick_ohlc(ax, candle_list, colorup="black", colordown="red", width=stick * .4)
+    candle_list = list(zip(list(date2num(plotdat.index.tolist())), plotdat["Open"].tolist(), plotdat["High"].tolist(),
+                           plotdat["Low"].tolist(), plotdat["Close"].tolist()))
+    candlestick_ohlc(ax, candle_list, colorup="black",
+                     colordown="red", width=stick * .4)
 
     # Plot other series (such as moving averages) as lines
     if otherseries != None:
@@ -112,5 +130,16 @@ def pandas_candlestick_ohlc(dat, stick="day", otherseries=None):
              rotation=45, horizontalalignment='right')
 
     plt.show()
-
-pandas_candlestick_ohlc(gg)
+# Get larger amount of GOOG data due to rolling average slow start
+new_start = datetime.datetime(2010, 1, 1)
+google = web.DataReader("GOOG", "yahoo", new_start, end)
+# 20-day(one month) moving average for Google data alongside the
+# candlestick graph
+google["20d"] = np.round(google["Close"].rolling(
+    window=20, center=False).mean(), 2)
+google["50d"] = np.round(google["Close"].rolling(
+    window=50, center=False).mean(), 2)
+google["200d"] = np.round(google["Close"].rolling(
+    window=200, center=False).mean(), 2)
+pandas_candlestick_ohlc(
+    google.loc['2016-01-04':'2017-01-02', :], otherseries=["20d", "50d", "200d"])
