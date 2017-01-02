@@ -5,17 +5,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import pandas_datareader.data as web
-from matplotlib.dates import MONDAY, DateFormatter, DayLocator, WeekdayLocator
+from matplotlib.dates import MONDAY, DateFormatter, DayLocator, WeekdayLocator, date2num
 from matplotlib.finance import candlestick_ohlc
 
-# Stock prices range over the past year from January 1, 2016 to today's date
+# Stock prices range over the past year from January 1, 2016 to January 1, 2017
 start = datetime.date(2016, 1, 1)
-end = datetime.date.today()
+end = datetime.date(2017, 1, 1)
 
-# Get Apple stock data by its ticker symbol "AAPL"
-apple = web.DataReader("AAPL", 'yahoo', start, end)
+# Get Google stock data by its ticker symbol "GOOGL"
+gg = web.DataReader("GOOGL", 'yahoo', start, end)
 
-print(type(apple))
+print(type(gg))
 
 
 def pandas_candlestick_ohlc(dat, stick="day", otherseries=None):
@@ -95,10 +95,10 @@ def pandas_candlestick_ohlc(dat, stick="day", otherseries=None):
 
     ax.grid(True)
 
-    # Create the candelstick chart
-    candlestick_ohlc(ax, list(zip(list(date2num(plotdat.index.tolist())), plotdat["Open"].tolist(), plotdat["High"].tolist(),
-                                  plotdat["Low"].tolist(), plotdat["Close"].tolist())),
-                     colorup="black", colordown="red", width=stick * .4)
+    # Create the candlestick chart
+    candle_list= list(zip(list(date2num(plotdat.index.tolist())), plotdat["Open"].tolist(), plotdat["High"].tolist(),
+                                  plotdat["Low"].tolist(), plotdat["Close"].tolist()))
+    candlestick_ohlc(ax, candle_list, colorup="black", colordown="red", width=stick * .4)
 
     # Plot other series (such as moving averages) as lines
     if otherseries != None:
@@ -113,4 +113,4 @@ def pandas_candlestick_ohlc(dat, stick="day", otherseries=None):
 
     plt.show()
 
-pandas_candlestick_ohlc(apple)
+pandas_candlestick_ohlc(gg)
