@@ -40,13 +40,16 @@ google.loc['2016-01-01':'2017-01-01',"Regime"].plot(ylim=(-2,2)).axhline(y=0, co
 #print(google["Regime"].value_counts())
 
 # To ensure all trades close out, regime of the last row = 0
-regime_orig= google.ix[-1, "Regime"]
-google.ix[-1,"Regime"]=0
-google["Signal"]= np.sign(google["Regime"] - google["Regime"].shift(1))
-# Restore original regime data
-google.ix[-1,"Regime"]= regime_orig
-
+# google["Signal"]= np.sign(google["Regime"] - google["Regime"].shift(1))
 #print(google["Signal"].value_counts())
 
-# Identify price of stock at every buy and sell
-print(google.loc[google["Signal"]==1,"Close"])
+# Create DataFrame with trades, includin price at trade and regime which trade occurs
+google_signals=pd.concat([pd.DataFrame({"Price": google.loc[google["Signal"] == 1, "Close"],
+                     "Regime": google.loc[google["Signal"] == 1, "Regime"],
+                     "Signal": "Buy"}),
+        pd.DataFrame({"Price": google.loc[google["Signal"] == -1, "Close"],
+                     "Regime": google.loc[google["Signal"] == -1, "Regime"],
+                     "Signal": "Sell"}),
+    ])
+google_signals.sort_index(inplace = True)
+google_signals

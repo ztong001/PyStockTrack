@@ -21,3 +21,5 @@ To install the dependencies:
 ```Shell
 pip install requirements.txt
 ```
+
+References at: https://github.com/datascience-course/2016-datascience-labs/blob/master/lab6-time-series/lab6-time-series.ipynb
