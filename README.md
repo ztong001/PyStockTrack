@@ -1,28 +1,23 @@
 #An Introduction to Stock Market Data Analysis with Python
 
-###Authored by Curtis Miller from this [blogpost](https://ntguardian.wordpress.com/2016/09/19/introduction-stock-market-data-python-1/)
+###Adapted from Curtis Miller from his [blog](https://ntguardian.wordpress.com)
 
 This is an experiment using Python to get stock market data from Yahoo Finance/Google Finance and project it on a plot graph for data analysis.
 This is **NOT** a stock market prediction algorithm, it only tracks the price changes in the stock market.
 
-Description:
+Requirements:
+- Python 3.x and above.
 - Depends on pandas, pandas_datareader(**NEW**), matplotlib and numpy.
-- You can track different stocks by referencing their ticker symbol within the code.
 - IPython is needed for matplotlib to display the graph.
 
-##Screenshots
-Google stock price for last year:
+##Navigation
 
-![Google stock price for 2016](/figure_1.png)
+You can refer to the specific blog posts in the folders ![Part 1](/Part 1) and ![Part 2](/Part 2). Part 1 focuses on the basic tools for handling and analyzing stock market data. Part 2 covers trading strategies using moving averages over a period of time and formulating exit strategies upon entering a position. The evaluation of a strategy is also elaborated by the use of backtesting. 
 
-Comparison of stock return prices between Google, Twitter and PayPal in 2016:
+To see the graphs, uncomment the line "plt.show()".
 
-![Stock returns for 2016](/figure_2.png)
+To install the dependencies:
 
-Candlestick plot for Google in 2016:
-
-![Candlestick plot](/figure_3.png)
-
-Candlestick plot with all rolling averages for Google in 2016:
-
-![Rolling averages](/figure_5.png)
+```Shell
+pip install requirements.txt
+```

@@ -17,7 +17,7 @@ google = web.DataReader("GOOG", "yahoo", start, end)
 twitter = web.DataReader("TWTR", "yahoo", start, end)
 paypal = web.DataReader("PYPL", "yahoo", start, end)
 
-# google.plot(grid=True)
+#google.plot(grid=True)
 
 # Create a DataFrame consisting of the adjusted closing price of
 # these stocks, first by making a list of these objects and using the join
@@ -26,7 +26,7 @@ stocks = pd.DataFrame({"TWTR": twitter["Adj Close"],
                        "PYPL": paypal["Adj Close"],
                        "GOOG": google["Adj Close"]})
 
-stocks.head()
+print(stocks.head())
 
 # df.apply(arg) will apply the function arg to each column in df, and return a DataFrame with the result
 # stock return is price at current time over price at the beginning
@@ -50,7 +50,7 @@ def pandas_candlestick_ohlc(dat, stick="day", otherseries=None):
     # Create a new DataFrame which includes OHLC data for each period
     # specified by stick input
     transdat = dat.loc[:, ["Open", "High", "Low", "Close"]]
-    if (type(stick) == str):
+    if isinstance(stick, str):
         if stick == "day":
             plotdat = transdat
             stick = 1  # Used for plotting
@@ -81,7 +81,7 @@ def pandas_candlestick_ohlc(dat, stick="day", otherseries=None):
             elif stick == "year":
                 stick = 365
 
-    elif (type(stick) == int and stick >= 1):
+    elif (isinstance(stick,int) and stick >= 1):
         transdat["stick"] = [np.floor(i / stick)
                              for i in range(len(transdat.index))]
         grouped = transdat.groupby("stick")
