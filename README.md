@@ -12,7 +12,7 @@ Requirements:
 
 ##Navigation
 
-You can refer to the specific blog posts in the folders ![Part 1](/Part 1) and ![Part 2](/Part 2). Part 1 focuses on the basic tools for handling and analyzing stock market data. Part 2 covers trading strategies using moving averages over a period of time and formulating exit strategies upon entering a position. The evaluation of a strategy is also elaborated by the use of backtesting. 
+You can refer to the specific blog posts in the folders [Part 1](/Part 1) and [Part 2](/Part 2). Part 1 focuses on the basic tools for handling and analyzing stock market data. Part 2 covers trading strategies using moving averages over a period of time and formulating exit strategies upon entering a position. The evaluation of a strategy is also elaborated by the use of backtesting. 
 
 To see the graphs, uncomment the line "plt.show()".
 
